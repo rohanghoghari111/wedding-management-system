@@ -1,0 +1,275 @@
+-------- Reset --------
+* {margin:0; padding:0; box-sizing:border-box;}
+body {
+    font-family:'Inter',sans-serif;
+    background: #0f172a;   /* Dark default */
+    color:#e2e8f0;         /* Dark text */
+    line-height:1.6;
+    transition: background .3s, color .3s;
+}
+a {text-decoration:none; color:inherit;}
+ul {list-style:none;}
+
+/* -------- LIGHT THEME -------- */
+body.light-theme {
+    background:#ffffff;
+    color:#111111;
+}
+body.light-theme nav {
+    background: linear-gradient(90deg, #3b82f6, #9333ea);
+}
+body.light-theme .card,
+body.light-theme .form-container,
+body.light-theme .table-container {
+    background:#f2f2f2;
+    color:#111;
+}
+body.light-theme .card p,
+body.light-theme .form-container p {
+    color:#334155;
+}
+body.light-theme .form-container input,
+body.light-theme .form-container select {
+    background:#fff;
+    border:1px solid #cbd5e1;
+    color:#111;
+}
+body.light-theme .table-container th {
+    background:#9333ea;
+    color:#fff;
+}
+body.light-theme .table-container tr:hover {
+    background:#fcd34d;
+}
+body.light-theme footer {
+    background: linear-gradient(90deg, #3b82f6, #9333ea);
+    color:#fff;
+}
+
+/* -------- DARK THEME OVERRIDES -------- */
+body.dark-theme {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+body.dark-theme nav {
+    background: linear-gradient(90deg, #1e293b, #0f172a);
+}
+body.dark-theme nav ul li a:hover {
+    background: #facc15;
+    color:#111;
+}
+body.dark-theme .card {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color: #e2e8f0;
+}
+body.dark-theme .card p {
+    color:#cbd5e1;
+}
+body.dark-theme .form-container {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    color:#fff;
+}
+body.dark-theme .form-container input,
+body.dark-theme .form-container select {
+    background:#0f172a;
+    border:1px solid #475569;
+    color:#fff;
+}
+body.dark-theme .table-container table {
+    background:#1e293b;
+    color:#fff;
+}
+body.dark-theme th {
+    background:#334155;
+}
+body.dark-theme tr:hover {
+    background:#475569;
+}
+body.light-theme .table-container th {
+    background:#9333ea;
+    color:#fff;
+}
+body.dark-theme .flash.success { background:#15803d; }
+body.dark-theme .flash.danger { background:#b91c1c; }
+body.dark-theme .flash.info { background:#1d4ed8; }
+
+/* -------- Navbar -------- */
+nav {
+    color:#fff;
+    padding:1rem 2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+nav .logo {
+    font-size:1.5rem;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+nav ul {display:flex; gap:1rem;}
+nav ul li a {
+    color:#fff;
+    padding:.5rem 1rem;
+    border-radius:6px;
+    transition:.3s;
+}
+nav ul li a:hover {
+    background: #facc15;
+    color:#111;
+    transform:scale(1.05);
+}
+
+/* -------- Footer -------- */
+footer {
+    text-align:center;
+    padding:1rem;
+    margin-top:2rem;
+}
+
+/* -------- Flash messages -------- */
+.flash-container {margin:1rem 2rem;}
+.flash {
+    padding:.7rem 1rem;
+    margin-bottom:.5rem;
+    border-radius:6px;
+    animation:fadeIn .5s;
+    font-weight:500;
+}
+.flash.success {background: #22c55e; color:#fff;}
+.flash.danger {background: #ef4444; color:#fff;}
+.flash.info {background: #3b82f6; color:#fff;}
+
+@keyframes fadeIn {
+    from{opacity:0;transform:translateY(-10px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* -------- Page Titles -------- */
+.page-title {
+    margin:2rem 2rem;
+    font-size:2rem;
+    animation:slideIn .6s;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+body.dark-theme .page-title { color:#e2e8f0; }
+body.light-theme .page-title { color:#1e293b; }
+
+@keyframes slideIn {
+    from{opacity:0;transform:translateX(-50px);}
+    to{opacity:1;transform:translateX(0);}
+}
+
+/* -------- Cards -------- */
+.cards {
+    display:flex;
+    flex-wrap:wrap;
+    gap:2rem;
+    margin:2rem;
+}
+.card {
+    background: linear-gradient(135deg, #fbcfe8, #d8b4fe);
+    padding:2rem;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+    flex:1 1 250px;
+    text-align:center;
+    transition:.3s;
+}
+.card:hover {
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+.card h2 {margin-bottom:1rem;}
+.card p {margin-bottom:1.5rem;}
+
+.btn {
+    display:inline-block;
+    padding:.5rem 1rem;
+    background: #f59e0b;
+    color:#fff;
+    border-radius:6px;
+    transition:.3s;
+}
+.btn:hover {
+    background: #d97706;
+    transform:scale(1.05);
+}
+
+/* -------- Forms -------- */
+.form-container {
+    max-width:400px;
+    margin:2rem auto;
+    padding:2rem;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    animation:fadeIn .5s;
+}
+.form-container h2 {margin-bottom:1.5rem; text-align:center;}
+.form-container input,
+.form-container select {
+    width:100%;
+    padding:.7rem;
+    margin-bottom:1rem;
+    border:1px solid #cbd5e1;
+    border-radius:6px;
+    transition:.3s;
+}
+.form-container input:focus,
+.form-container select:focus {
+    border-color:#9333ea;
+    outline:none;
+    transform:scale(1.02);
+}
+.form-container button {
+    width:100%;
+    padding:.7rem;
+    background:#9333ea;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.3s;
+}
+.form-container button:hover {
+    background:#7e22ce;
+    transform:scale(1.05);
+}
+
+/* -------- Tables -------- */
+.table-container {
+    margin:2rem;
+    overflow-x:auto;
+}
+.table-container table {
+    width:100%;
+    border-collapse:collapse;
+    border-radius:12px;
+    overflow:hidden;
+    animation:fadeIn .5s;
+}
+.table-container th,
+.table-container td {
+    padding:.7rem 1rem;
+    text-align:left;
+    border-bottom:1px solid #e2e8f0;
+}
+.table-container th {
+    color:#fff;
+}
+.table-container tr:hover {
+    transition:.3s;
+}
+
+.add-btn {
+    margin-bottom:1rem;
+    display:inline-block;
+    background:#3b82f6;
+    color:#fff;
+    padding:.5rem 1rem;
+    border-radius:6px;
+    transition:.3s;
+}
+.add-btn:hover {
+    background:#2563eb;
+    transform:scale(1.05);
+}

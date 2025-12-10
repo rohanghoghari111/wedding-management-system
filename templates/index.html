@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ session.get('theme', 'dark') }}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Marriage Management System</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+/* THEME COLORS HANDLING */
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+    --card: #f2f2f2;
+    --nav: #ffffff;
+}
+
+[data-theme="dark"] {
+    --bg: #121212;
+    --text: #ffffff;
+    --card: #1e1e1e;
+    --nav: #1c1c1c;
+}
+
+body {
+    margin:0;
+    padding:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+/* nav + cards use new vars */
+nav {
+    background: var(--nav);
+}
+
+.card, .table-container, .form-container {
+    background: var(--card);
+    color: var(--text);
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+/* FLASH MESSAGES */
+.flash-container { position: fixed; top:10px; right:10px; z-index: 999; }
+.flash { padding:10px; margin:5px; border-radius:5px; }
+.flash.success { background: #4CAF50; color:#fff; }
+.flash.warning { background:#ff9800; color:#fff; }
+.flash.danger { background:#f44336; color:#fff; }
+.flash.info { background:#2196F3; color:#fff; }
+
+/* PARTICLE BACKGROUND */
+#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* content ઉપર દેખાશે */
+}
+
+/* NAVIGATION */
+nav ul { display:flex; list-style:none; padding:10px 20px; }
+nav ul li { margin-right:20px; }
+nav ul li a, nav ul li button { color: var(--text); text-decoration:none; background:none; border:none; cursor:pointer; font-weight:bold; }
+nav ul li button { padding:5px 10px; background:#ff9800; border-radius:5px; }
+
+/* TABLE STYLING */
+table { 
+    width:100%; 
+    border-collapse: collapse; 
+    margin-top:10px; 
+}
+
+table th, table td { 
+    border:1px solid #ccc; 
+    padding:4px; 
+    text-align:left; 
+    line-height: 14px;   /* compact rows */
+    font-size: 13px;
+}
+
+table th { 
+    background:#cd7809;   /* header background color */
+    color: #bbb;           /* 🔥 YELLOW text color */
+    font-weight:600;
+}
+
+/* FORM STYLING */
+input, select { width:100%; padding:8px; margin:5px 0; border-radius:5px; border:1px solid #ccc; }
+button.btn { padding:8px 15px; background:#ff9800; color:#fff; border:none; border-radius:5px; cursor:pointer; }
+</style>
+
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<nav>
+    <div class="logo">💍 Wedding Manager</div>
+    <ul>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('view_weddings') }}">Weddings</a></li>
+        <li><a href="{{ url_for('view_vendors') }}">Vendors</a></li>
+        <li><a href="{{ url_for('view_guests') }}">Guests</a></li>
+        <li><a href="{{ url_for('view_budget') }}">Budget</a></li>
+        <li><button id="themeToggle" class="btn">Toggle Theme</button></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+    </ul>
+</nav>
+
+<main>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Dashboard -->
+    {% if request.endpoint == 'dashboard' %}
+    <h1 class="page-title">Welcome!</h1>
+    <div class="cards">
+        <div class="card">
+            <h2>Weddings</h2>
+            <p>Manage weddings</p>
+            <a href="{{ url_for('view_weddings') }}" class="btn">View</a>
+        </div>
+        <div class="card">
+            <h2>Vendors</h2>
+            <p>Manage vendors</p>
+            <a href="{{ url_for('view_vendors') }}" class="btn">View</a>
+        </div>
+        <div class="card">
+            <h2>Guests</h2>
+            <p>Manage guests</p>
+            <a href="{{ url_for('view_guests') }}" class="btn">View</a>
+        </div>
+        <div class="card">
+            <h2>Budget</h2>
+            <p>Manage wedding budget</p>
+            <a href="{{ url_for('view_budget') }}" class="btn">View</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Weddings Section -->
+    {% if request.endpoint == 'view_weddings' %}
+    <div class="table-container">
+        <h2>Weddings</h2>
+        <a href="{{ url_for('add_wedding') }}" class="btn add-btn">+ Add Wedding</a>
+        <table>
+            <thead><tr><th>ID</th><th>Couple</th><th>Date</th><th>Location</th></tr></thead>
+            <tbody>
+                {% for w in weddings %}
+                <tr>
+                    <td>{{ w[0] }}</td>
+                    <td>{{ w[1] }}</td>
+                    <td>{{ w[2] }}</td>
+                    <td>{{ w[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if request.endpoint == 'add_wedding' %}
+    <div class="form-container">
+        <h2>Add Wedding</h2>
+        <form method="POST">
+            <input type="text" name="couple_name" placeholder="Couple Name" required>
+            <input type="date" name="wedding_date" required>
+            <input type="text" name="location" placeholder="Location" required>
+            <button type="submit" class="btn">Add</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Vendors Section -->
+    {% if request.endpoint == 'view_vendors' %}
+    <div class="table-container">
+        <h2>Vendors</h2>
+        <a href="{{ url_for('add_vendor') }}" class="btn add-btn">+ Add Vendor</a>
+        <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Service</th><th>Contact</th></tr></thead>
+            <tbody>
+                {% for v in vendors %}
+                <tr>
+                    <td>{{ v[0] }}</td>
+                    <td>{{ v[1] }}</td>
+                    <td>{{ v[2] }}</td>
+                    <td>{{ v[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if request.endpoint == 'add_vendor' %}
+    <div class="form-container">
+        <h2>Add Vendor</h2>
+        <form method="POST">
+            <input type="text" name="name" placeholder="Vendor Name" required>
+            <input type="text" name="service" placeholder="Service" required>
+            <input type="text" name="contact" placeholder="Contact" required>
+            <button type="submit" class="btn">Add</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Guests Section -->
+    {% if request.endpoint == 'view_guests' %}
+    <div class="table-container">
+        <h2>Guests</h2>
+        <a href="{{ url_for('add_guest') }}" class="btn add-btn">+ Add Guest</a>
+        <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Wedding</th><th>QR</th></tr></thead>
+            <tbody>
+                {% for g in guests %}
+                <tr>
+                    <td>{{ g[0] }}</td>
+                    <td>{{ g[1] }}</td>
+                    <td>{{ g[2] }}</td>
+                    <td>{{ g[3] }}</td>
+                    <td>{{ g[4] }}</td>
+                    <td><a href="{{ url_for('generate_qr', guest_id=g[0]) }}" class="btn">QR</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if request.endpoint == 'add_guest' %}
+    <div class="form-container">
+        <h2>Add Guest</h2>
+        <form method="POST">
+            <select name="wedding_id" required>
+                <option value="">Select Wedding</option>
+                {% for w in weddings %}
+                <option value="{{ w[0] }}">{{ w[1] }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="name" placeholder="Guest Name" required>
+            <input type="email" name="email" placeholder="Email">
+            <input type="text" name="phone" placeholder="Phone">
+            <button type="submit" class="btn">Add</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <!-- Budget Section -->
+    {% if request.endpoint == 'view_budget' %}
+    <div class="table-container">
+        <h2>Budget</h2>
+        <a href="{{ url_for('add_budget') }}" class="btn add-btn">+ Add Budget</a>
+        <table>
+            <thead><tr><th>ID</th><th>Wedding</th><th>Category</th><th>Amount</th></tr></thead>
+            <tbody>
+                {% for b in budget %}
+                <tr>
+                    <td>{{ b[0] }}</td>
+                    <td>{{ b[4] }}</td>
+                    <td>{{ b[2] }}</td>
+                    <td>₹ {{ b[3] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% if request.endpoint == 'add_budget' or add_budget_page %}
+    <div class="form-container">
+        <h2>Add Budget</h2>
+        <form method="POST">
+            <select name="wedding_id" required>
+                <option value="">Select Wedding</option>
+                {% for w in weddings %}
+                <option value="{{ w[0] }}">{{ w[1] }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="category" placeholder="Category" required>
+            <input type="number" name="amount" placeholder="Amount" required>
+            <button type="submit" class="btn">Add</button>
+        </form>
+    </div>
+    {% endif %}
+
+</main>
+
+<footer>
+    © 2025 Wedding Management System
+</footer>
+
+<script>
+// THEME TOGGLE BUTTON
+document.getElementById("themeToggle").addEventListener("click", () => {
+    let current = document.documentElement.getAttribute("data-theme");
+    let newTheme = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    fetch(`/set_theme/${newTheme}`);
+});
+
+// PARTICLE BACKGROUND
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+let w,h;
+function resize(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; }
+window.addEventListener('resize',resize);
+resize();
+
+let particles=[];
+for(let i=0;i<100;i++){
+    particles.push({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*3+1,
+        dx: (Math.random()-0.5)*1.5,
+        dy: (Math.random()-0.5)*1.5
+    });
+}
+
+function draw(){
+    ctx.clearRect(0,0,w,h);
+    for(let p of particles){
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,165,0,0.7)';
+        ctx.fill();
+        p.x+=p.dx;
+        p.y+=p.dy;
+        if(p.x<0||p.x>w)p.dx*=-1;
+        if(p.y<0||p.y>h)p.dy*=-1;
+    }
+    requestAnimationFrame(draw);
+}
+draw();
+</script>
+
+</body>
+</html>
