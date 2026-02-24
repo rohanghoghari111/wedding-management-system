@@ -21,7 +21,7 @@ def init_db():
  
     # Users table — for login system
     c.execute("""CREATE TABLE IF NOT EXISTS users(
-                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                 id INTEGER PRIMARY KEY AUTOINCREMENT,   
                  username TEXT UNIQUE NOT NULL,
                  password TEXT NOT NULL)""")
 
@@ -221,21 +221,32 @@ def generate_qr(guest_id):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
 
-    # Guest + wedding details
     c.execute("""
         SELECT guests.name, weddings.couple_name, weddings.wedding_date, weddings.location
         FROM guests 
         JOIN weddings ON guests.wedding_id = weddings.id
         WHERE guests.id = ?
-    """, (guest_id,))# id thi data fetch
+    """, (guest_id,))
     data = c.fetchone()
     conn.close()
 
-    if data is None:
+    if not data:
         flash("Guest not found", "danger")
         return redirect(url_for('view_guests'))
 
     guest_name, couple, date, location = data
+
+    detail_url = url_for('wedding_detail', guest_id=guest_id, _external=True)
+
+    qr = qrcode.make(detail_url)
+
+    buf = io.BytesIO()
+    qr.save(buf)
+    qr_code = base64.b64encode(buf.getvalue()).decode()
+
+    return render_template("qr.html",
+                           qr_code=qr_code,
+                           guest_name=guest_name)
 
     # Local system IP for QR link
     local_ip = socket.gethostbyname(socket.gethostname())#compute ip address 
