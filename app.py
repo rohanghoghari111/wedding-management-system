@@ -10,8 +10,6 @@ import socket
 app = Flask(__name__)#handle webpage and route
 app.secret_key = "my_super_secret_key_98765" #data secure 
 
-
-
 DB_PATH = "database.db"
 
 # ---------------- DATABASE SETUP ----------------
