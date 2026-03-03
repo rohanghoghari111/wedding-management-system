@@ -3,318 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ultra-Advanced Login - Wedding Manager</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+<title>Ultra Advanced Login - Wedding Manager</title>
 
-/* =================== Body =================== */
-body {
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
   margin:0;
   padding:0;
+  box-sizing:border-box;
   font-family:'Inter',sans-serif;
+}
+
+body{
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  overflow:hidden;
   background:#0a0a1e;
-  perspective:1500px;
+  overflow:hidden;
+  position:relative;
 }
 
-/* =================== Background Circles =================== */
+/* Background */
 .bg-circle{
   position:absolute;
   border-radius:50%;
-  filter:blur(150px);
+  filter:blur(120px);
   opacity:0.6;
-  animation: float 30s ease-in-out infinite;
-  z-index:0;
+  animation:float 20s ease-in-out infinite;
 }
-.circle1{ width:400px;height:400px; background:radial-gradient(circle,#ff6b81,#ff4757); top:-150px; left:-150px; animation-delay:0s;}
-.circle2{ width:500px;height:500px; background:radial-gradient(circle,#6a82fb,#667eea); bottom:-200px; right:-200px; animation-delay:5s;}
-.circle3{ width:300px;height:300px; background:radial-gradient(circle,#fddb92,#d1fdff); top:50%; left:50%; transform:translate(-50%,-50%); animation-delay:10s;}
-.circle4{ width:200px;height:200px; background:radial-gradient(circle,#4ade80,#16a34a); top:10%; right:20%; animation-delay:3s;}
-.circle5{ width:250px;height:250px; background:radial-gradient(circle,#facc15,#f97316); bottom:30%; left:15%; animation-delay:7s;}
-.circle6{ width:350px;height:350px; background:radial-gradient(circle,#d946ef,#8b5cf6); top:20%; left:50%; animation-delay:12s;}
-.circle7{ width:150px;height:150px; background:radial-gradient(circle,#14b8a6,#0d9488); bottom:10%; right:40%; animation-delay:2s;}
-.circle8{ width:300px;height:300px; background:radial-gradient(circle,#f43f5e,#e11d48); top:60%; right:60%; animation-delay:8s;}
-.circle9{ width:200px;height:200px; background:radial-gradient(circle,#38bdf8,#0ea5e9); bottom:40%; left:70%; animation-delay:4s;}
-.circle10{ width:250px;height:250px; background:radial-gradient(circle,#f97316,#ea580c); top:30%; left:20%; animation-delay:6s;}
+.circle1{width:400px;height:400px;background:#ff6b81;top:-150px;left:-150px;}
+.circle2{width:500px;height:500px;background:#6a82fb;bottom:-200px;right:-200px;}
 
 @keyframes float{
-  0%,100%{transform:translateY(0) translateX(0);}
-  50%{transform:translateY(80px) translateX(80px);}
+  0%,100%{transform:translate(0,0);}
+  50%{transform:translate(80px,60px);}
 }
 
-/* =================== Particle Canvas =================== */
-#particle-canvas{
-  position:absolute;
-  top:0; left:0;
-  width:100%; height:100%;
-  z-index:0;
-}
-
-/* =================== Glassmorphic Login Container =================== */
+/* ================= BIGGER Login Box ================= */
 .login-container{
   position:relative;
   z-index:2;
+  width:520px;              /* 🔥 size increased */
+  padding:70px 60px;        /* 🔥 more spacing */
+  border-radius:30px;
   background:rgba(255,255,255,0.08);
   backdrop-filter:blur(25px);
-  padding:60px 50px;
-  border-radius:30px;
+  border:1px solid rgba(255,255,255,0.2);
   box-shadow:0 25px 70px rgba(0,0,0,0.7);
-  width:420px;
   text-align:center;
-  transform-style:preserve-3d;
-  transition:transform 0.3s ease;
-  animation: floatContainer 6s ease-in-out infinite;
-}
-@keyframes floatContainer{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-25px);}
 }
 
-/* =================== Tilt Effect =================== */
-</style>
-<script>
-// ---------------- Tilt & Circle Parallax ----------------
-document.addEventListener("DOMContentLoaded", ()=>{
-  const container=document.querySelector(".login-container");
-  const circles=document.querySelectorAll(".bg-circle");
-  document.addEventListener("mousemove",(e)=>{
-    const x=(window.innerWidth/2-e.clientX)/30;
-    const y=(window.innerHeight/2-e.clientY)/30;
-    container.style.transform=`rotateY(${x}deg) rotateX(${y}deg) translateZ(0)`;
-    circles.forEach((c,i)=>{
-      const offset=(i+1)*12;
-      c.style.transform=`translate(${x*offset}px, ${y*offset}px)`;
-    });
-  });
-});
-
-// ---------------- Particle System ----------------
-window.onload=function(){
-  const canvas=document.createElement('canvas');
-  canvas.id='particle-canvas';
-  document.body.appendChild(canvas);
-  const ctx=canvas.getContext('2d');
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-  let particlesArray=[];
-
-  class Particle{
-    constructor(){
-      this.x=Math.random()*canvas.width;
-      this.y=Math.random()*canvas.height;
-      this.size=Math.random()*3+1;
-      this.speedX=Math.random()*1-0.5;
-      this.speedY=Math.random()*1-0.5;
-      this.color=`rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},0.6)`;
-    }
-    update(){
-      this.x+=this.speedX;
-      this.y+=this.speedY;
-      if(this.x>canvas.width) this.x=0;
-      if(this.x<0) this.x=canvas.width;
-      if(this.y>canvas.height) this.y=0;
-      if(this.y<0) this.y=canvas.height;
-    }
-    draw(){
-      ctx.fillStyle=this.color;
-      ctx.beginPath();
-      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-      ctx.fill();
-    }
-  }
-
-  function initParticles(num){
-    for(let i=0;i<num;i++){
-      particlesArray.push(new Particle());
-    }
-  }
-  initParticles(500); // increased for more density
-
-  function animate(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particlesArray.forEach(p=>{p.update();p.draw();});
-    requestAnimationFrame(animate);
-  }
-  animate();
-  window.addEventListener('resize',()=>{
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-  });
-};
-</script>
-<style>
-/* =================== Login Title =================== */
 .login-container h2{
-  margin-bottom:35px;
   color:#fff;
+  margin-bottom:40px;
   font-weight:700;
-  letter-spacing:1px;
-  text-shadow:0 5px 35px rgba(255,255,255,0.3);
-  animation:titleGlow 3s ease-in-out infinite alternate;
-}
-@keyframes titleGlow{
-  0%{text-shadow:0 2px 10px rgba(255,255,255,0.2);}
-  50%{text-shadow:0 2px 30px rgba(255,107,129,0.7);}
-  100%{text-shadow:0 2px 50px rgba(255,245,178,0.7);}
+  font-size:28px;           /* 🔥 bigger title */
 }
 
-/* =================== Input Fields =================== */
-.login-container .input-group{
+/* Input */
+.input-group{
   position:relative;
-  margin-bottom:28px;
+  margin-bottom:30px;
 }
-.login-container input{
+
+.input-group input{
   width:100%;
-  padding:18px 20px;
-  border-radius:18px;
+  padding:18px;             /* 🔥 bigger input */
+  border-radius:14px;
   border:none;
   outline:none;
-  font-size:16px;
   background:rgba(255,255,255,0.15);
   color:#fff;
-  transition:0.3s ease, box-shadow 0.4s ease;
-}
-.login-container input:focus{
-  background:rgba(255,255,255,0.35);
-  box-shadow:0 0 40px #ff6b81;
-  transform: scale(1.03);
+  font-size:16px;           /* 🔥 bigger text */
+  transition:0.3s;
 }
 
-/* Floating labels */
-.login-container label{
+.input-group input:focus{
+  background:rgba(255,255,255,0.25);
+  box-shadow:0 0 25px #ff6b81;
+}
+
+.input-group label{
   position:absolute;
   top:50%;
-  left:20px;
-  color:#fff;
-  font-size:14px;
-  pointer-events:none;
+  left:18px;
   transform:translateY(-50%);
-  transition:0.3s ease;
+  color:#ddd;
+  font-size:15px;
+  transition:0.3s;
+  pointer-events:none;
 }
-.login-container input:focus + label,
-.login-container input:not(:placeholder-shown) + label{
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label{
   top:-10px;
-  left:15px;
   font-size:13px;
   color:#ff6b81;
 }
 
-/* =================== Buttons =================== */
-.login-container button{
+/* Button */
+button{
   width:100%;
-  padding:18px;
-  border-radius:18px;
+  padding:18px;            /* 🔥 bigger button */
   border:none;
-  background: linear-gradient(90deg,#ff6b81,#ff4757,#fbb034,#ff6b81);
-  background-size:300% 100%;
+  border-radius:14px;
+  background:linear-gradient(90deg,#ff6b81,#ff4757);
   color:#fff;
-  font-size:16px;
   font-weight:600;
+  font-size:16px;
   cursor:pointer;
-  position:relative;
-  overflow:hidden;
-  transition:0.4s ease;
-  animation: gradientShift 5s ease infinite;
-}
-@keyframes gradientShift{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-.login-container button::after{
-  content:"";
-  position:absolute;
-  width:50px;
-  height:100%;
-  top:0;
-  left:-50px;
-  background:rgba(255,255,255,0.2);
-  transform: skewX(-25deg);
-  transition:0.5s;
-}
-.login-container button:hover::after{ left:150%; }
-.login-container button:hover{
-  transform: translateY(-5px) scale(1.05);
-  box-shadow:0 20px 50px rgba(255,107,129,0.6);
+  transition:0.3s;
 }
 
-/* =================== Links =================== */
-.login-container a{
-  display:block;
-  margin-top:20px;
-  color:#fff;
-  text-decoration:none;
-  font-size:14px;
-  transition:0.3s ease;
+button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 40px rgba(255,107,129,0.6);
 }
-.login-container a:hover{ color:#ffd6d6; }
 
-/* =================== Flash Messages =================== */
+/* Flash */
 .flash{
-  margin-bottom:18px;
-  padding:14px;
+  padding:12px;
   border-radius:12px;
-  color:#fff;
-  animation: slideDown 0.5s ease;
+  margin-bottom:20px;
+  font-size:14px;
 }
 .flash.success{background:#28a745;}
 .flash.warning{background:#ffc107;color:#000;}
 .flash.info{background:#17a2b8;}
-@keyframes slideDown{
-  0%{transform:translateY(-25px);opacity:0;}
-  100%{transform:translateY(0);opacity:1;}
-}
 
-/* =================== Extra Floating Shapes =================== */
-.shape{
-  position:absolute;
-  border-radius:50%;
-  opacity:0.3;
-  filter:blur(80px);
-  z-index:0;
-  animation: shapeFloat 25s ease-in-out infinite;
-}
-@keyframes shapeFloat{
-  0%,100%{transform:translate(0,0);}
-  50%{transform:translate(60px,40px);}
-}
-
-/* Additional small floating spheres */
-.shape-small{
-  width:80px;height:80px;
-  animation-duration:20s;
-}
-.shape-medium{
-  width:120px;height:120px;
-  animation-duration:30s;
-}
-.shape-large{
-  width:180px;height:180px;
-  animation-duration:40s;
+@media(max-width:600px){
+  .login-container{
+    width:90%;
+    padding:50px 30px;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<!-- Background Circles -->
 <div class="bg-circle circle1"></div>
 <div class="bg-circle circle2"></div>
-<div class="bg-circle circle3"></div>
-<div class="bg-circle circle4"></div>
-<div class="bg-circle circle5"></div>
-<div class="bg-circle circle6"></div>
-<div class="bg-circle circle7"></div>
-<div class="bg-circle circle8"></div>
-<div class="bg-circle circle9"></div>
-<div class="bg-circle circle10"></div>
 
-<!-- Login Container -->
 <div class="login-container">
   <h2>Login</h2>
+
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category,message in messages %}
@@ -322,25 +157,31 @@ window.onload=function(){
       {% endfor %}
     {% endif %}
   {% endwith %}
-  <form method="POST">
-    <div class="input-group">
-      <input type="text" name="username" placeholder=" " required>
-      <label>Username</label>
-    </div>
-    <div class="input-group">
-      <input type="password" name="password" placeholder=" " required>
-      <label>Password</label>
-    </div>
-    <button type="submit">Login</button>
-  </form>
-  <a href="#">Forgot password?</a>
-</div>
 
-<!-- Extra Floating Shapes -->
-<div class="shape shape-small" style="top:5%;left:85%;background:radial-gradient(circle,#ff6b81,#ff4757);"></div>
-<div class="shape shape-medium" style="bottom:15%;right:70%;background:radial-gradient(circle,#6a82fb,#667eea);"></div>
-<div class="shape shape-large" style="top:60%;left:10%;background:radial-gradient(circle,#facc15,#f97316);"></div>
-<div class="shape shape-small" style="bottom:30%;right:20%;background:radial-gradient(circle,#4ade80,#16a34a);"></div>
+<form method="POST" autocomplete="off">
+
+  <div class="input-group">
+    <input type="text"
+           name="username"
+           placeholder=" "
+           required
+           autocomplete="new-username">
+    <label>Username</label>
+  </div>
+
+  <div class="input-group">
+    <input type="password"
+           name="password"
+           placeholder=" "
+           required
+           autocomplete="new-password">
+    <label>Password</label>
+  </div>
+
+  <button type="submit">Login</button>
+
+</form>
+</div>
 
 </body>
 </html>
