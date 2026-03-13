@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wedding Invitation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #F5A623;
+      --gold-light: #FFD580;
+      --gold-dark: #C47D0E;
+      --bg: #FFFDF8;
+      --card-bg: #F5F5F0;
+      --text-dark: #1a1a1a;
+      --text-muted: #666;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Floating dots background — matches screenshot */
+    .dots-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.55;
+      animation: floatDot 6s ease-in-out infinite alternate;
+    }
+    @keyframes floatDot {
+      from { transform: translateY(0px); }
+      to   { transform: translateY(-14px); }
+    }
+
+    /* Card */
+    .card {
+      position: relative;
+      z-index: 1;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 50px rgba(245, 166, 35, 0.18), 0 2px 16px rgba(0,0,0,0.07);
+      max-width: 520px;
+      width: 92%;
+      padding: 0;
+      overflow: hidden;
+      animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Gold top banner */
+    .card-banner {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 60%, var(--gold-dark) 100%);
+      padding: 36px 40px 28px;
+      text-align: center;
+      position: relative;
+    }
+    .card-banner::after {
+      content: '';
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 56px;
+      height: 56px;
+      background: #fff;
+      border-radius: 50%;
+      border: 4px solid var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .rings-icon {
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      font-size: 22px;
+      line-height: 56px;
+      width: 56px;
+      text-align: center;
+    }
+    .card-banner h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 6px;
+    }
+    .card-banner .couple-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    /* Body */
+    .card-body {
+      padding: 52px 40px 36px;
+    }
+
+    .greeting {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .greeting p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .greeting .guest-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-top: 4px;
+      margin-bottom: 0;
+      font-style: normal;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold-light), transparent);
+    }
+    .divider-dot {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .detail-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .detail-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 24px rgba(245,166,35,0.15);
+    }
+    .detail-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--gold);
+      border-radius: 3px 0 0 3px;
+    }
+    .detail-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 5px;
+    }
+    .detail-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    .detail-card.wide {
+      grid-column: 1 / -1;
+    }
+
+    .thank-you {
+      text-align: center;
+      padding: 20px 0 4px;
+    }
+    .thank-you p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+    .thank-you .signature {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--gold-dark);
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    /* Footer */
+    .card-footer {
+      text-align: center;
+      padding: 0 40px 28px;
+      font-size: 11px;
+      color: #bbb;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating dot background -->
+  <div class="dots-bg" id="dotsBg"></div>
+
+  <div class="card">
+    <div class="card-banner">
+      <h1>Wedding Invitation</h1>
+      <div class="couple-name">$cname</div>
+      <div class="rings-icon">💍</div>
+    </div>
+
+    <div class="card-body">
+      <div class="greeting">
+        <p>You are cordially invited,</p>
+        <p class="guest-name">$gname</p>
+        <p style="margin-top:6px; font-size:14px;">to celebrate the joyful union of</p>
+      </div>
+
+      <div class="divider"><div class="divider-dot"></div></div>
+
+      <div class="details-grid">
+        <div class="detail-card">
+          <div class="detail-label">Couple</div>
+          <div class="detail-value">$cname</div>
+        </div>
+        <div class="detail-card">
+          <div class="detail-label">Date</div>
+          <div class="detail-value">$date</div>
+        </div>
+        <div class="detail-card wide">
+          <div class="detail-label">Location</div>
+          <div class="detail-value">$loc</div>
+        </div>
+      </div>
+
+      <div class="divider"><div class="divider-dot"></div></div>
+
+      <div class="thank-you">
+        <p>We are overjoyed to share this special moment with you.<br>Your presence will make our day truly unforgettable.</p>
+        <div class="signature">With love &amp; joy ✨</div>
+      </div>
+    </div>
+
+    <div class="card-footer">© 2025 Wedding Management System</div>
+  </div>
+
+  <script>
+    // Generate scattered dots to match screenshot aesthetic
+    const bg = document.getElementById('dotsBg');
+    const count = 40;
+    for (let i = 0; i < count; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot';
+      const size = Math.random() * 7 + 3;
+      d.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        top:${Math.random()*100}%;
+        animation-delay:${Math.random()*4}s;
+        animation-duration:${4+Math.random()*5}s;
+        opacity:${0.25 + Math.random()*0.45};
+      `;
+      bg.appendChild(d);
+    }
+  </script>
+</body>
+</html>

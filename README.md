@@ -174,12 +174,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 ## 👨‍💻 Author
 
-Wedding Management System Project – 2025  
+Rohan Ghoghari 
 Built using Flask + SQLite  
 
----
-
-## 📜 License
-
-This project is for educational purposes.  
-You can modify and use freely.

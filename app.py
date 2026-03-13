@@ -264,6 +264,38 @@ def generate_qr(guest_id):
 
     return render_template("qr.html", qr_code=qr_code, guest_name=guest_name, detail_url=detail_url)
 
+
+
+# def get_invitation_html(gname, cname, date, loc):
+#     # Load the template file (adjust path as needed)
+#     with open("templates/wedding_invitation.html", "r", encoding="utf-8") as f:
+#         template = f.read()
+    
+#     # Inject values
+#     html = template.format(
+#         gname=gname,
+#         cname=cname,
+#         date=date,
+#         loc=loc
+#     )
+#     return html
+
+from string import Template
+
+def get_invitation_html(gname, cname, date, loc):
+    with open("templates/wedding_invitation.html", "r", encoding="utf-8") as f:
+        template = Template(f.read())
+    
+    html = template.safe_substitute(
+        gname=gname,
+        cname=cname,
+        date=date,
+        loc=loc
+    )
+    return html
+
+
+
 @app.route('/wedding_detail/<int:guest_id>')
 def wedding_detail(guest_id):
     conn = sqlite3.connect(DB_PATH)
@@ -281,16 +313,26 @@ def wedding_detail(guest_id):
         return "<h3>Details not found</h3>"
 
     gname, cname, date, loc = row
+
+    response = get_invitation_html(gname, cname, date, loc)
+
+    return response
+
+
     
     # Simple HTML response
-    return f"""
-        <h1>Wedding Invitation</h1>
-        <p><b>Guest:</b> {gname}</p>
-        <p><b>Couple:</b> {cname}</p>
-        <p><b>Date:</b> {date}</p>
-        <p><b>Location:</b> {loc}</p>
-        <h3>Thank you!</h3>
-    """
+    # return f"""
+    #     <h1>Wedding Invitation</h1>
+    #     <p><b>Guest:</b> {gname}</p>
+    #     <p><b>Couple:</b> {cname}</p>
+    #     <p><b>Date:</b> {date}</p>
+    #     <p><b>Location:</b> {loc}</p>
+    #     <h3>Thank you!</h3>
+    # """
+
+
+
+    
 
 # ---------------- BUDGET ----------------
 @app.route('/budget')
