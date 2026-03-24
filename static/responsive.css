@@ -1,70 +1,355 @@
-/* DESKTOP MIRROR & PRO SCALING 
-   This ensures the mobile version looks exactly like the laptop version, 
-   just scaled for the screen size.
-*/
+/* =====================================================
+   responsive.css — Wedding Management System
+   Link this AFTER your existing style.css & base styles
+   ===================================================== */
 
-:root {
-    --desktop-min-width: 1200px; /* Force desktop logic */
+/* ── Fluid base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-/* 1. FORCE DESKTOP VIEW ON MOBILE */
-html, body {
-    min-width: var(--desktop-min-width); /* Prevents the 'stacking' behavior */
-    overflow-x: auto; /* Allows the user to see the full professional layout */
-    -webkit-text-size-adjust: 100%;
+img, video, canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* 2. NAVIGATION - KEEP LAPTOP LAYOUT */
+/* ══════════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════════ */
 nav {
-    display: flex !important;
-    flex-direction: row !important; /* Force horizontal */
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100%;
-    white-space: nowrap; /* Prevents menu items from wrapping */
-    padding: 10px 40px !important;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+nav .logo {
+  font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
 nav ul {
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 20px !important;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
 }
 
-/* 3. DASHBOARD CARDS - SIDE BY SIDE (As seen on Laptop) */
-.cards {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important; /* Force them to stay in one line if laptop does */
+nav ul li a,
+nav ul li button {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.7rem;
+  white-space: nowrap;
+}
+
+/* Hamburger toggle (JS-free fallback: scrollable row) */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    width: 100%;
     overflow-x: auto;
-    gap: 25px !important;
-    padding: 20px !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  nav ul::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  nav .logo {
+    font-size: 1rem;
+  }
+
+  nav ul li a,
+  nav ul li button {
+    font-size: 0.78rem;
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   DASHBOARD CARDS
+══════════════════════════════════════════════ */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 1.5rem 1rem;
 }
 
 .card {
-    flex: 0 0 300px !important; /* Keep the exact laptop width */
-    min-width: 300px;
+  flex: 1 1 220px;
+  min-width: 0;
 }
 
-/* 4. TABLES - PRO COMPACT VIEW */
+@media (max-width: 640px) {
+  .cards {
+    gap: 1rem;
+    margin: 1rem 0.75rem;
+  }
+
+  .card {
+    flex: 1 1 100%;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   PAGE TITLE
+══════════════════════════════════════════════ */
+.page-title {
+  margin: 1.5rem 1rem;
+  font-size: 1.6rem;
+  word-break: break-word;
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.25rem;
+    margin: 1rem 0.75rem;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   TABLE CONTAINERS
+══════════════════════════════════════════════ */
 .table-container {
-    width: 100% !important;
-    overflow-x: visible !important; /* Rely on body scroll for laptop feel */
+  margin: 1.5rem 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: none;       /* remove fixed height on mobile */
+  border-radius: 10px;
 }
 
-table {
-    width: 100% !important;
-    table-layout: fixed; /* Professional fixed spacing */
+@media (max-width: 640px) {
+  .table-container {
+    margin: 1rem 0.5rem;
+  }
 }
 
-/* 5. FIXING THE LOGIN & INVITATION SIZING */
-.login-container, .card:has(.card-banner) {
-    width: 520px !important; /* Force the exact laptop width */
-    margin: 50px auto !important;
+.table-container table {
+  min-width: 480px;       /* table stays readable, container scrolls */
 }
 
-/* 6. VIEWPORT OPTIMIZATION */
-/* This trick tells the mobile browser to treat the page as a 1200px screen */
-@viewport {
-    width: 1200px;
+.table-container th,
+.table-container td {
+  padding: 0.6rem 0.8rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .table-container th,
+  .table-container td {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* Add button above table */
+.add-btn {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+/* ══════════════════════════════════════════════
+   FORM CONTAINERS
+══════════════════════════════════════════════ */
+.form-container {
+  max-width: 460px;
+  width: calc(100% - 2rem);
+  margin: 1.5rem auto;
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 0.65rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.95rem;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 0.7rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    width: calc(100% - 1.5rem);
+    padding: 1.25rem;
+    margin: 1rem auto;
+  }
+
+  .form-container h2 {
+    font-size: 1.2rem;
+  }
+
+  .form-container input,
+  .form-container select {
+    font-size: 0.88rem;
+    padding: 0.55rem;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   FLASH MESSAGES
+══════════════════════════════════════════════ */
+.flash-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  left: 10px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.flash {
+  pointer-events: all;
+  max-width: 340px;
+  width: 100%;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  word-break: break-word;
+}
+
+@media (max-width: 480px) {
+  .flash-container {
+    align-items: stretch;
+  }
+
+  .flash {
+    max-width: 100%;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   LOGIN PAGE
+══════════════════════════════════════════════ */
+.login-container {
+  width: min(520px, 92vw);
+  padding: clamp(2.5rem, 8vw, 4.5rem) clamp(1.5rem, 7vw, 3.75rem);
+}
+
+.login-container h2 {
+  font-size: clamp(1.3rem, 5vw, 1.75rem);
+}
+
+.input-group input {
+  padding: clamp(0.75rem, 3vw, 1.1rem);
+  font-size: clamp(0.88rem, 3vw, 1rem);
+}
+
+@media (max-width: 400px) {
+  .login-container {
+    border-radius: 18px;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   INVITATION / QR CARD (invitation.html)
+══════════════════════════════════════════════ */
+.card[class*="invitation"],
+body > .card {         /* top-level card in invitation template */
+  max-width: min(520px, 92vw);
+  margin: 1rem auto;
+}
+
+.card-banner {
+  padding: clamp(1.5rem, 6vw, 2.25rem) clamp(1.25rem, 6vw, 2.5rem) 1.75rem;
+}
+
+.card-banner .couple-name {
+  font-size: clamp(1.4rem, 5.5vw, 2rem);
+}
+
+.card-body {
+  padding: 3rem clamp(1.25rem, 6vw, 2.5rem) 2rem;
+}
+
+.details-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 440px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-card.wide {
+    grid-column: 1;
+  }
+
+  .card-body {
+    padding: 2.5rem 1rem 1.5rem;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   QR PAGE
+══════════════════════════════════════════════ */
+body > h2 {               /* QR page h2 */
+  font-size: clamp(1.1rem, 5vw, 1.5rem);
+  padding: 0 1rem;
+}
+
+body > img {              /* QR image */
+  max-width: 260px;
+  width: 80vw;
+  margin: 1rem auto;
+}
+
+/* ══════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════ */
+footer {
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* ══════════════════════════════════════════════
+   UTILITY — hide overflow, accessible tap targets
+══════════════════════════════════════════════ */
+main {
+  min-height: 60vh;
+  overflow-x: hidden;
+}
+
+.btn,
+button.btn,
+a.btn {
+  min-height: 36px;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ══════════════════════════════════════════════
+   PARTICLE CANVAS (keep behind content on mobile)
+══════════════════════════════════════════════ */
+#bgCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
 }
