@@ -1,126 +1,156 @@
-/* MASTER RESPONSIVE OVERRIDES 
-   Focus: Fluid scaling & Professional UI 
+/* MASTER PROFESSIONAL UI REFINEMENT 
+   Focus: Enterprise-grade responsiveness & spacing
 */
 
 :root {
-    /* Fluid Typography: min 1rem, max 1.25rem based on viewport */
-    --fluid-text: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
-    --fluid-h1: clamp(1.8rem, 1.5rem + 2vw, 3rem);
+    --max-content-width: 1400px;
+    --section-padding: clamp(1rem, 5vw, 3rem);
+    --border-radius-lg: 16px;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-/* 1. FLUID LAYOUT FIXES */
+/* 1. LAYOUT ARCHITECTURE */
+body {
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 main {
+    flex: 1;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
+    max-width: var(--max-content-width);
+    margin: 0 auto !important;
+    padding: var(--section-padding) !important;
+    box-sizing: border-box;
 }
 
-/* 2. NAVIGATION - Glassmorphism Mobile Menu */
-@media (max-width: 992px) {
+/* 2. NAVIGATION - PRO DESKTOP TO MOBILE */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem var(--section-padding) !important;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 2vw, 30px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@media (max-width: 1024px) {
     nav {
-        flex-wrap: wrap;
-        padding: 1rem !important;
+        flex-direction: column;
+        gap: 15px;
     }
     nav ul {
         width: 100%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile for better space */
-        gap: 10px;
-        margin-top: 15px;
-    }
-    nav ul li {
-        margin: 0 !important;
-    }
-    nav ul li a {
-        display: block;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 12px !important;
-        text-align: center;
-        border-radius: 8px;
-        font-size: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }
 
-/* 3. DASHBOARD CARDS - Grid Auto-fit */
+/* 3. DASHBOARD GRID (PRO) */
 .cards {
     display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-    gap: 20px !important;
-    margin: 20px 0 !important;
+    /* This creates a fluid grid that doesn't need media queries for columns */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)) !important;
+    gap: 25px !important;
+    margin: 0 !important;
 }
 
 .card {
-    margin: 0 !important;
-    height: auto !important;
-    max-height: none !important;
-}
-
-/* 4. PROFESSIONAL TABLE HANDLING (The "Card-View" Trick) */
-@media (max-width: 768px) {
-    .table-container {
-        border: none !important;
-        background: transparent !important;
-    }
-    
-    table, thead, tbody, th, td, tr { 
-        display: block; 
-    }
-    
-    /* Hide table headers but keep for accessibility */
-    thead tr { 
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-    
-    tr {
-        background: var(--card);
-        margin-bottom: 15px;
-        border-radius: 12px;
-        padding: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    td {
-        border: none !important;
-        position: relative;
-        padding-left: 50% !important;
-        text-align: right !important;
-        padding: 12px 8px !important;
-    }
-    
-    /* Adding Label before data */
-    td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 10px;
-        width: 45%;
-        text-align: left;
-        font-weight: bold;
-        color: var(--gold-dark, #ff9800);
-    }
-}
-
-/* 5. FORM & LOGIN ADJUSTMENTS */
-.form-container, .login-container {
-    width: 95% !important;
-    max-width: 500px !important;
-    padding: clamp(20px, 5vw, 50px) !important;
-}
-
-/* Fix for Wedding Invitation Card on Mobile */
-.card-body {
-    padding: 25px 15px !important;
-}
-.details-grid {
-    grid-template-columns: 1fr !important;
-}
-
-/* 6. BUTTONS - Touch friendly size */
-.btn, button {
-    min-height: 44px; /* Standard Apple/Google touch target */
+    height: 100% !important;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+    border: 1px solid var(--glass-border) !important;
+    padding: 30px !important;
+}
+
+/* 4. DATA TABLES (HORIZONTAL SCROLL WITH LUXURY FEEL) */
+.table-container {
+    width: 100% !important;
+    background: var(--card) !important;
+    border-radius: var(--border-radius-lg) !important;
+    border: 1px solid var(--glass-border) !important;
+    margin-top: 2rem !important;
+    padding: 0 !important; /* Table needs to flush against edges */
+    overflow: hidden;
+}
+
+.table-container h2 {
+    padding: 20px 25px;
+    margin: 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.table-container > div { /* Scroll wrapper */
+    overflow-x: auto;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    min-width: 800px; /* Ensures professional spacing on small screens */
+    margin: 0 !important;
+}
+
+table th {
+    padding: 18px 25px !important;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+table td {
+    padding: 15px 25px !important;
+    vertical-align: middle;
+}
+
+/* 5. FORMS & MODALS */
+.form-container {
+    max-width: 600px !important; /* Professional width */
+    width: 100% !important;
+    margin: 4rem auto !important;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3) !important;
+    border: 1px solid var(--glass-border) !important;
+}
+
+/* 6. LOGIN PAGE - FULLY CENTERED & FLUID */
+body:has(.login-container) {
+    padding: 20px;
+}
+
+.login-container {
+    width: min(500px, 95%) !important;
+    margin: auto !important;
+    padding: clamp(30px, 8vw, 60px) !important;
+}
+
+/* 7. WEDDING INVITATION SCALING */
+.card:has(.card-banner) {
+    max-width: 550px !important;
+    margin: 20px auto !important;
+}
+
+/* 8. SCROLLBARS (For that premium feel) */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--gold-dark, #ff9800);
+    border-radius: 10px;
 }
