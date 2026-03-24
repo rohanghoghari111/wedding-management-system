@@ -1,123 +1,94 @@
-/* ===============================
-   GLOBAL RESPONSIVE FIX
-================================= */
+/* RESPONSIVE OVERRIDES - New File */
 
-html, body {
-    width: 100%;
-    overflow-x: hidden;
-}
-
-/* ===============================
-   NAVBAR RESPONSIVE
-================================= */
-
-@media (max-width: 768px) {
+/* 1. Mobile & Small Screens (up to 768px) */
+@media screen and (max-width: 768px) {
+    
+    /* Navigation: Stack items vertically */
     nav {
         flex-direction: column;
-        align-items: flex-start;
+        padding: 1rem;
+        height: auto;
     }
 
     nav ul {
         flex-direction: column;
         width: 100%;
-        gap: 10px;
+        gap: 0.5rem;
         padding: 10px 0;
+        align-items: center;
     }
 
     nav ul li {
+        margin-right: 0;
         width: 100%;
+        text-align: center;
     }
 
-    nav ul li a,
-    nav ul li button {
-        display: block;
-        width: 100%;
-    }
-}
-
-/* ===============================
-   CARDS RESPONSIVE
-================================= */
-
-@media (max-width: 768px) {
+    /* Dashboard Cards: Force 1 card per row */
     .cards {
         flex-direction: column;
         margin: 1rem;
+        gap: 1.5rem;
     }
 
     .card {
+        flex: 1 1 100%;
         width: 100%;
     }
-}
 
-/* ===============================
-   TABLE RESPONSIVE (SCROLL)
-================================= */
-
-@media (max-width: 768px) {
+    /* Tables: Make them scrollable horizontally so they don't break */
     .table-container {
+        margin: 10px;
         overflow-x: auto;
+        display: block;
     }
 
     table {
-        min-width: 600px;
+        min-width: 600px; /* Forces scroll instead of squishing text */
     }
-}
 
-/* ===============================
-   FORM RESPONSIVE
-================================= */
-
-@media (max-width: 768px) {
+    /* Forms: Make them fill the screen */
     .form-container {
-        width: 90%;
+        max-width: 90%;
+        margin: 2rem auto;
         padding: 1.5rem;
     }
-}
 
-/* ===============================
-   LOGIN PAGE RESPONSIVE
-================================= */
-
-@media (max-width: 600px) {
+    /* Login Box (Ultra Advanced Login) */
     .login-container {
-        width: 90% !important;
+        width: 95% !important;
         padding: 40px 20px !important;
+        margin: 10px;
     }
-}
 
-/* ===============================
-   INVITATION CARD RESPONSIVE
-================================= */
+    .login-container h2 {
+        font-size: 22px;
+    }
 
-@media (max-width: 600px) {
+    /* Invitation Card */
     .card {
         width: 95% !important;
-    }
-
-    .card-body {
-        padding: 30px 20px !important;
+        margin: 10px auto;
     }
 
     .details-grid {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr; /* Stack detail boxes */
     }
 }
 
-/* ===============================
-   TEXT SIZE MOBILE
-================================= */
-
-@media (max-width: 500px) {
-    h1 {
-        font-size: 20px;
+/* 2. Extra Small Screens (up to 480px) */
+@media screen and (max-width: 480px) {
+    .page-title {
+        font-size: 1.5rem;
+        margin: 1.5rem 1rem;
+        text-align: center;
     }
 
-    h2 {
-        font-size: 18px;
+    .card-banner .couple-name {
+        font-size: 24px;
     }
 
-    p {
-        font-size: 14px;
+    .card-body {
+        padding: 30px 20px;
     }
 }
