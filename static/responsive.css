@@ -1,81 +1,97 @@
-/* =====================================================
-   responsive.css — Wedding Management System
-   Link this AFTER your existing style.css & base styles
-   ===================================================== */
+/* =============================================================
+   responsive.css  —  Wedding Management System
+   Place in /static/ and link LAST in every template's <head>
+   Original files are NOT modified. This is purely additive.
+   ============================================================= */
 
-/* ── Fluid base ── */
+/* ─────────────────────────────────────────────
+   1. GLOBAL BOX-MODEL SAFETY
+───────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
 }
-
-img, video, canvas {
+html, body {
+  overflow-x: hidden;
+}
+img, canvas, video {
   max-width: 100%;
   height: auto;
-  display: block;
+}
+main {
+  overflow-x: hidden;
 }
 
-/* ══════════════════════════════════════════════
-   NAVIGATION
-══════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────
+   2. NAVIGATION  (index.html / base.html)
+───────────────────────────────────────────── */
 nav {
+  display: flex !important;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  gap: 8px;
 }
 
 nav .logo {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  white-space: nowrap;
   flex-shrink: 0;
 }
 
 nav ul {
+  display: flex !important;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 4px;
   padding: 0;
+  margin: 0;
 }
 
 nav ul li a,
 nav ul li button {
-  font-size: 0.85rem;
-  padding: 0.4rem 0.7rem;
+  font-size: 0.82rem;
+  padding: 6px 10px;
+  border-radius: 5px;
   white-space: nowrap;
+  display: inline-block;
 }
 
-/* Hamburger toggle (JS-free fallback: scrollable row) */
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
     align-items: flex-start;
+    padding: 10px 12px;
   }
-
   nav ul {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding-bottom: 4px;
+    padding-bottom: 2px;
+    flex-wrap: nowrap;
   }
-
-  nav ul::-webkit-scrollbar {
-    display: none;
-  }
+  nav ul::-webkit-scrollbar { display: none; }
 }
 
 @media (max-width: 480px) {
-  nav .logo {
-    font-size: 1rem;
-  }
-
+  nav .logo { font-size: 0.92rem; }
   nav ul li a,
-  nav ul li button {
-    font-size: 0.78rem;
-    padding: 0.35rem 0.6rem;
-  }
+  nav ul li button { font-size: 0.75rem; padding: 5px 8px; }
 }
 
-/* ══════════════════════════════════════════════
-   DASHBOARD CARDS
-══════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────
+   3. PAGE TITLE
+───────────────────────────────────────────── */
+.page-title {
+  font-size: clamp(1.2rem, 5vw, 2rem);
+  margin: 1.5rem 1rem;
+  word-break: break-word;
+}
+
+/* ─────────────────────────────────────────────
+   4. DASHBOARD CARDS
+───────────────────────────────────────────── */
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -84,102 +100,93 @@ nav ul li button {
 }
 
 .card {
-  flex: 1 1 220px;
+  flex: 1 1 230px;
   min-width: 0;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 600px) {
   .cards {
+    flex-direction: column;
     gap: 1rem;
     margin: 1rem 0.75rem;
   }
-
   .card {
     flex: 1 1 100%;
+    width: 100%;
   }
 }
 
-/* ══════════════════════════════════════════════
-   PAGE TITLE
-══════════════════════════════════════════════ */
-.page-title {
-  margin: 1.5rem 1rem;
-  font-size: 1.6rem;
-  word-break: break-word;
-}
-
-@media (max-width: 480px) {
-  .page-title {
-    font-size: 1.25rem;
-    margin: 1rem 0.75rem;
-  }
-}
-
-/* ══════════════════════════════════════════════
-   TABLE CONTAINERS
-══════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────
+   5. TABLE CONTAINERS
+───────────────────────────────────────────── */
 .table-container {
   margin: 1.5rem 1rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  max-height: none;       /* remove fixed height on mobile */
+  max-height: none;
   border-radius: 10px;
 }
 
-@media (max-width: 640px) {
-  .table-container {
-    margin: 1rem 0.5rem;
-  }
-}
-
 .table-container table {
-  min-width: 480px;       /* table stays readable, container scrolls */
+  min-width: 520px;
+  width: 100%;
 }
 
 .table-container th,
 .table-container td {
-  padding: 0.6rem 0.8rem;
-  font-size: 0.85rem;
+  padding: 8px 10px;
+  font-size: 0.83rem;
   white-space: nowrap;
+  line-height: 1.4;
+}
+
+.add-btn {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .table-container { margin: 1rem 0.5rem; }
 }
 
 @media (max-width: 480px) {
   .table-container th,
-  .table-container td {
-    padding: 0.5rem 0.6rem;
-    font-size: 0.78rem;
-  }
+  .table-container td { padding: 6px 8px; font-size: 0.78rem; }
 }
 
-/* Add button above table */
-.add-btn {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-}
-
-/* ══════════════════════════════════════════════
-   FORM CONTAINERS
-══════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────
+   6. FORM CONTAINERS
+───────────────────────────────────────────── */
 .form-container {
-  max-width: 460px;
   width: calc(100% - 2rem);
-  margin: 1.5rem auto;
-  padding: 1.5rem;
+  max-width: 440px;
+  margin: 2rem auto;
+  padding: 1.75rem;
   border-radius: 12px;
+}
+
+.form-container h2 {
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  margin-bottom: 1.25rem;
+  text-align: center;
 }
 
 .form-container input,
 .form-container select {
   width: 100%;
-  padding: 0.65rem;
-  margin-bottom: 0.9rem;
+  padding: 10px 12px;
+  margin-bottom: 14px;
   font-size: 0.95rem;
+  border-radius: 6px;
 }
 
 .form-container button {
   width: 100%;
-  padding: 0.7rem;
+  padding: 10px;
   font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  min-height: 44px;
 }
 
 @media (max-width: 480px) {
@@ -188,168 +195,270 @@ nav ul li button {
     padding: 1.25rem;
     margin: 1rem auto;
   }
-
-  .form-container h2 {
-    font-size: 1.2rem;
-  }
-
   .form-container input,
-  .form-container select {
-    font-size: 0.88rem;
-    padding: 0.55rem;
-  }
+  .form-container select { font-size: 0.88rem; padding: 9px 10px; }
+  .form-container button { font-size: 0.88rem; }
 }
 
-/* ══════════════════════════════════════════════
-   FLASH MESSAGES
-══════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────
+   7. FLASH MESSAGES
+───────────────────────────────────────────── */
 .flash-container {
   position: fixed;
   top: 10px;
   right: 10px;
   left: 10px;
   z-index: 9999;
+  pointer-events: none;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
-  pointer-events: none;
 }
 
 .flash {
   pointer-events: all;
   max-width: 340px;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 10px 14px;
   font-size: 0.88rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
   word-break: break-word;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
 
 @media (max-width: 480px) {
-  .flash-container {
-    align-items: stretch;
-  }
-
-  .flash {
-    max-width: 100%;
-  }
+  .flash-container { align-items: stretch; top: 6px; right: 6px; left: 6px; }
+  .flash { max-width: 100%; font-size: 0.82rem; }
 }
 
-/* ══════════════════════════════════════════════
-   LOGIN PAGE
-══════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────
+   8. BUTTONS — mobile tap target
+───────────────────────────────────────────── */
+.btn, a.btn, button.btn {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────
+   9. FOOTER
+───────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 12px 1rem;
+  font-size: 0.82rem;
+  margin-top: 2rem;
+}
+
+/* ─────────────────────────────────────────────
+   10. PARTICLE CANVAS
+───────────────────────────────────────────── */
+#bgCanvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: -1 !important;
+  pointer-events: none;
+}
+
+
+/* =============================================================
+   LOGIN PAGE  (login.html)
+   ============================================================= */
+
 .login-container {
   width: min(520px, 92vw);
-  padding: clamp(2.5rem, 8vw, 4.5rem) clamp(1.5rem, 7vw, 3.75rem);
+  padding: clamp(2.5rem, 8vw, 4.375rem) clamp(1.5rem, 7vw, 3.75rem);
+  border-radius: clamp(16px, 4vw, 30px);
 }
 
 .login-container h2 {
-  font-size: clamp(1.3rem, 5vw, 1.75rem);
+  font-size: clamp(1.25rem, 5vw, 1.75rem);
+  margin-bottom: clamp(1.25rem, 5vw, 2.5rem);
+}
+
+.input-group {
+  margin-bottom: clamp(1rem, 4vw, 1.875rem);
 }
 
 .input-group input {
-  padding: clamp(0.75rem, 3vw, 1.1rem);
+  padding: clamp(0.75rem, 3vw, 1.125rem);
   font-size: clamp(0.88rem, 3vw, 1rem);
+  border-radius: 10px;
 }
 
-@media (max-width: 400px) {
+.input-group label {
+  font-size: clamp(0.78rem, 2.5vw, 0.94rem);
+  left: clamp(12px, 3vw, 18px);
+}
+
+.login-container button {
+  padding: clamp(0.7rem, 3vw, 1.125rem);
+  font-size: clamp(0.88rem, 3vw, 1rem);
+  border-radius: 10px;
+  min-height: 48px;
+}
+
+.bg-circle.circle1 {
+  width: clamp(180px, 45vw, 400px);
+  height: clamp(180px, 45vw, 400px);
+}
+
+.bg-circle.circle2 {
+  width: clamp(220px, 55vw, 500px);
+  height: clamp(220px, 55vw, 500px);
+}
+
+@media (max-width: 380px) {
   .login-container {
-    border-radius: 18px;
+    padding: 2rem 1.25rem;
+    border-radius: 14px;
   }
 }
 
-/* ══════════════════════════════════════════════
-   INVITATION / QR CARD (invitation.html)
-══════════════════════════════════════════════ */
-.card[class*="invitation"],
-body > .card {         /* top-level card in invitation template */
+
+/* =============================================================
+   WEDDING INVITATION PAGE  (invitation.html)
+   ============================================================= */
+
+/* Fluid card wrapper */
+body > .card {
   max-width: min(520px, 92vw);
   margin: 1rem auto;
+  border-radius: clamp(14px, 4vw, 20px);
+  overflow: hidden;
 }
 
+/* Gold banner */
 .card-banner {
   padding: clamp(1.5rem, 6vw, 2.25rem) clamp(1.25rem, 6vw, 2.5rem) 1.75rem;
 }
 
+.card-banner h1 {
+  font-size: clamp(0.62rem, 2.2vw, 0.8125rem);
+  letter-spacing: clamp(1px, 0.8vw, 4px);
+}
+
 .card-banner .couple-name {
-  font-size: clamp(1.4rem, 5.5vw, 2rem);
+  font-size: clamp(1.3rem, 5.5vw, 2rem);
 }
 
+/* Rings icon */
+.rings-icon {
+  font-size: clamp(16px, 4vw, 22px);
+  width: clamp(44px, 10vw, 56px);
+  height: clamp(44px, 10vw, 56px);
+  line-height: clamp(44px, 10vw, 56px);
+  bottom: clamp(-18px, -4.5vw, -22px);
+}
+
+.card-banner::after {
+  width: clamp(44px, 10vw, 56px);
+  height: clamp(44px, 10vw, 56px);
+  bottom: clamp(-18px, -4.5vw, -22px);
+}
+
+/* Card body */
 .card-body {
-  padding: 3rem clamp(1.25rem, 6vw, 2.5rem) 2rem;
+  padding: clamp(2.5rem, 8vw, 3.25rem) clamp(1.25rem, 6vw, 2.5rem) clamp(1.5rem, 5vw, 2.25rem);
 }
 
+/* Greeting */
+.greeting p {
+  font-size: clamp(0.84rem, 3vw, 0.9375rem);
+}
+
+.greeting .guest-name {
+  font-size: clamp(1.1rem, 5vw, 1.375rem);
+}
+
+/* Details grid */
 .details-grid {
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: clamp(10px, 3vw, 16px);
+  margin-bottom: clamp(1rem, 4vw, 1.75rem);
+}
+
+.detail-card {
+  padding: clamp(10px, 3vw, 16px) clamp(12px, 3.5vw, 18px);
+  border-radius: clamp(8px, 2vw, 12px);
+}
+
+.detail-label {
+  font-size: clamp(7px, 2vw, 10px);
+  letter-spacing: clamp(1px, 0.5vw, 2.5px);
+}
+
+.detail-value {
+  font-size: clamp(0.8rem, 3vw, 0.9375rem);
 }
 
 @media (max-width: 440px) {
   .details-grid {
     grid-template-columns: 1fr;
   }
-
   .detail-card.wide {
     grid-column: 1;
   }
-
-  .card-body {
-    padding: 2.5rem 1rem 1.5rem;
-  }
 }
 
-/* ══════════════════════════════════════════════
-   QR PAGE
-══════════════════════════════════════════════ */
-body > h2 {               /* QR page h2 */
-  font-size: clamp(1.1rem, 5vw, 1.5rem);
-  padding: 0 1rem;
+/* Thank you */
+.thank-you p {
+  font-size: clamp(0.78rem, 2.8vw, 0.875rem);
+  line-height: 1.7;
 }
 
-body > img {              /* QR image */
-  max-width: 260px;
-  width: 80vw;
-  margin: 1rem auto;
+.thank-you .signature {
+  font-size: clamp(1rem, 4.5vw, 1.25rem);
+  margin-top: 10px;
 }
 
-/* ══════════════════════════════════════════════
-   FOOTER
-══════════════════════════════════════════════ */
-footer {
-  padding: 0.75rem 1rem;
-  font-size: 0.82rem;
-  text-align: center;
-  margin-top: 1.5rem;
+/* Card footer */
+.card-footer {
+  padding: 0 clamp(1.25rem, 6vw, 2.5rem) clamp(1rem, 4vw, 1.75rem);
+  font-size: clamp(9px, 2.5vw, 11px);
 }
 
-/* ══════════════════════════════════════════════
-   UTILITY — hide overflow, accessible tap targets
-══════════════════════════════════════════════ */
-main {
-  min-height: 60vh;
-  overflow-x: hidden;
+/* Dots background */
+.dots-bg {
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.btn,
-button.btn,
-a.btn {
-  min-height: 36px;
-  line-height: 1.2;
-  display: inline-flex;
+
+/* =============================================================
+   QR PAGE  (qr.html)
+   ============================================================= */
+
+body:not(.has-nav) {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  text-align: center;
 }
 
-/* ══════════════════════════════════════════════
-   PARTICLE CANVAS (keep behind content on mobile)
-══════════════════════════════════════════════ */
-#bgCanvas {
-  position: fixed;
-  inset: 0;
+body:not(.has-nav) h2 {
+  font-size: clamp(1rem, 5vw, 1.4rem);
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+body:not(.has-nav) img {
+  max-width: min(260px, 80vw);
   width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
+  margin: 0 auto 1rem;
+}
+
+body:not(.has-nav) p {
+  font-size: clamp(0.85rem, 3.5vw, 1rem);
 }
