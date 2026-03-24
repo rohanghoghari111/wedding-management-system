@@ -1,94 +1,126 @@
-/* RESPONSIVE OVERRIDES - New File */
+/* MASTER RESPONSIVE OVERRIDES 
+   Focus: Fluid scaling & Professional UI 
+*/
 
-/* 1. Mobile & Small Screens (up to 768px) */
-@media screen and (max-width: 768px) {
-    
-    /* Navigation: Stack items vertically */
+:root {
+    /* Fluid Typography: min 1rem, max 1.25rem based on viewport */
+    --fluid-text: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+    --fluid-h1: clamp(1.8rem, 1.5rem + 2vw, 3rem);
+}
+
+/* 1. FLUID LAYOUT FIXES */
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* 2. NAVIGATION - Glassmorphism Mobile Menu */
+@media (max-width: 992px) {
     nav {
-        flex-direction: column;
-        padding: 1rem;
-        height: auto;
+        flex-wrap: wrap;
+        padding: 1rem !important;
     }
-
     nav ul {
-        flex-direction: column;
         width: 100%;
-        gap: 0.5rem;
-        padding: 10px 0;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile for better space */
+        gap: 10px;
+        margin-top: 15px;
     }
-
     nav ul li {
-        margin-right: 0;
-        width: 100%;
-        text-align: center;
+        margin: 0 !important;
     }
-
-    /* Dashboard Cards: Force 1 card per row */
-    .cards {
-        flex-direction: column;
-        margin: 1rem;
-        gap: 1.5rem;
-    }
-
-    .card {
-        flex: 1 1 100%;
-        width: 100%;
-    }
-
-    /* Tables: Make them scrollable horizontally so they don't break */
-    .table-container {
-        margin: 10px;
-        overflow-x: auto;
+    nav ul li a {
         display: block;
-    }
-
-    table {
-        min-width: 600px; /* Forces scroll instead of squishing text */
-    }
-
-    /* Forms: Make them fill the screen */
-    .form-container {
-        max-width: 90%;
-        margin: 2rem auto;
-        padding: 1.5rem;
-    }
-
-    /* Login Box (Ultra Advanced Login) */
-    .login-container {
-        width: 95% !important;
-        padding: 40px 20px !important;
-        margin: 10px;
-    }
-
-    .login-container h2 {
-        font-size: 22px;
-    }
-
-    /* Invitation Card */
-    .card {
-        width: 95% !important;
-        margin: 10px auto;
-    }
-
-    .details-grid {
-        grid-template-columns: 1fr; /* Stack detail boxes */
+        background: rgba(255, 255, 255, 0.05);
+        padding: 12px !important;
+        text-align: center;
+        border-radius: 8px;
+        font-size: 14px;
     }
 }
 
-/* 2. Extra Small Screens (up to 480px) */
-@media screen and (max-width: 480px) {
-    .page-title {
-        font-size: 1.5rem;
-        margin: 1.5rem 1rem;
-        text-align: center;
-    }
+/* 3. DASHBOARD CARDS - Grid Auto-fit */
+.cards {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
+    margin: 20px 0 !important;
+}
 
-    .card-banner .couple-name {
-        font-size: 24px;
-    }
+.card {
+    margin: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+}
 
-    .card-body {
-        padding: 30px 20px;
+/* 4. PROFESSIONAL TABLE HANDLING (The "Card-View" Trick) */
+@media (max-width: 768px) {
+    .table-container {
+        border: none !important;
+        background: transparent !important;
     }
+    
+    table, thead, tbody, th, td, tr { 
+        display: block; 
+    }
+    
+    /* Hide table headers but keep for accessibility */
+    thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    
+    tr {
+        background: var(--card);
+        margin-bottom: 15px;
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    td {
+        border: none !important;
+        position: relative;
+        padding-left: 50% !important;
+        text-align: right !important;
+        padding: 12px 8px !important;
+    }
+    
+    /* Adding Label before data */
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--gold-dark, #ff9800);
+    }
+}
+
+/* 5. FORM & LOGIN ADJUSTMENTS */
+.form-container, .login-container {
+    width: 95% !important;
+    max-width: 500px !important;
+    padding: clamp(20px, 5vw, 50px) !important;
+}
+
+/* Fix for Wedding Invitation Card on Mobile */
+.card-body {
+    padding: 25px 15px !important;
+}
+.details-grid {
+    grid-template-columns: 1fr !important;
+}
+
+/* 6. BUTTONS - Touch friendly size */
+.btn, button {
+    min-height: 44px; /* Standard Apple/Google touch target */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
