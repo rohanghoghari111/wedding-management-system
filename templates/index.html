@@ -7,70 +7,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 <style>
-
-/* ================= RESPONSIVE ================= */
-
-/* MOBILE NAV FIX */
-@media (max-width:768px){
-    nav ul{
-        flex-direction: column;
-        gap:10px;
-    }
-
-    nav{
-        padding:10px;
-    }
-}
-
-/* CARDS GRID */
-.cards{
-    display:grid;
-    grid-template-columns: repeat(4,1fr);
-    gap:20px;
-}
-
-@media (max-width:992px){
-    .cards{
-        grid-template-columns: repeat(2,1fr);
-    }
-}
-
-@media (max-width:600px){
-    .cards{
-        grid-template-columns: 1fr;
-    }
-}
-
-/* TABLE SCROLL FIX */
-.table-container{
-    overflow-x:auto;
-}
-
-table{
-    min-width:600px;
-}
-
-/* FORM MOBILE */
-@media (max-width:600px){
-    .form-container{
-        padding:10px;
-    }
-
-    input, select{
-        font-size:14px;
-    }
-}
-
-/* TEXT FIX */
-@media (max-width:600px){
-    h1{
-        font-size:20px;
-    }
-    h2{
-        font-size:18px;
-    }
-}
-
 /* THEME COLORS HANDLING */
 :root {
     --bg: #ffffff;
@@ -411,7 +347,6 @@ function draw(){
     requestAnimationFrame(draw);
 }
 draw();
-
 </script>
 
 </body>

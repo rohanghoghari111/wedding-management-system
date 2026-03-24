@@ -1,24 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{text-align:center;}
-
-img{
-width:250px;
-max-width:90%;
-}
-</style>
-
+    <title>Wedding QR</title>
 </head>
-
-<body>
-
-<h2>Scan QR</h2>
-<img src="data:image/png;base64,{{ qr_code }}">
-<p>{{ guest_name }}</p>
-
+<body style="text-align:center;">
+    <h2>Scan to View Wedding Details</h2>
+    <img src="data:image/png;base64,{{ qr_code }}" width="260">
+    <p>Guest: {{ guest_name }}</p>
 </body>
 </html>
