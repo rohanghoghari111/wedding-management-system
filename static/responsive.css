@@ -1,0 +1,123 @@
+/* ===============================
+   GLOBAL RESPONSIVE FIX
+================================= */
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ===============================
+   NAVBAR RESPONSIVE
+================================= */
+
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    nav ul li {
+        width: 100%;
+    }
+
+    nav ul li a,
+    nav ul li button {
+        display: block;
+        width: 100%;
+    }
+}
+
+/* ===============================
+   CARDS RESPONSIVE
+================================= */
+
+@media (max-width: 768px) {
+    .cards {
+        flex-direction: column;
+        margin: 1rem;
+    }
+
+    .card {
+        width: 100%;
+    }
+}
+
+/* ===============================
+   TABLE RESPONSIVE (SCROLL)
+================================= */
+
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 600px;
+    }
+}
+
+/* ===============================
+   FORM RESPONSIVE
+================================= */
+
+@media (max-width: 768px) {
+    .form-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+}
+
+/* ===============================
+   LOGIN PAGE RESPONSIVE
+================================= */
+
+@media (max-width: 600px) {
+    .login-container {
+        width: 90% !important;
+        padding: 40px 20px !important;
+    }
+}
+
+/* ===============================
+   INVITATION CARD RESPONSIVE
+================================= */
+
+@media (max-width: 600px) {
+    .card {
+        width: 95% !important;
+    }
+
+    .card-body {
+        padding: 30px 20px !important;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ===============================
+   TEXT SIZE MOBILE
+================================= */
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
