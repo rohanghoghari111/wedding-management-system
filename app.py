@@ -264,6 +264,22 @@ def generate_qr(guest_id):
 
     return render_template("qr.html", qr_code=qr_code, guest_name=guest_name, detail_url=detail_url)
 
+
+
+# def get_invitation_html(gname, cname, date, loc):
+#     # Load the template file (adjust path as needed)
+#     with open("templates/wedding_invitation.html", "r", encoding="utf-8") as f:
+#         template = f.read()
+    
+#     # Inject values
+#     html = template.format(
+#         gname=gname,
+#         cname=cname,
+#         date=date,
+#         loc=loc
+#     )
+#     return html
+
 from string import Template
 
 def get_invitation_html(gname, cname, date, loc):
@@ -301,6 +317,22 @@ def wedding_detail(guest_id):
     response = get_invitation_html(gname, cname, date, loc)
 
     return response
+
+
+    
+    # Simple HTML response
+    # return f"""
+    #     <h1>Wedding Invitation</h1>
+    #     <p><b>Guest:</b> {gname}</p>
+    #     <p><b>Couple:</b> {cname}</p>
+    #     <p><b>Date:</b> {date}</p>
+    #     <p><b>Location:</b> {loc}</p>
+    #     <h3>Thank you!</h3>
+    # """
+
+
+
+    
 
 # ---------------- BUDGET ----------------
 @app.route('/budget')
@@ -362,41 +394,3 @@ def set_theme(mode): #user theme click kare ae aa mode ma aave
 # ---------------- RUN APP ----------------
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
